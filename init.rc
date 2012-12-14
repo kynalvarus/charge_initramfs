@@ -117,13 +117,6 @@ loglevel 3
 	insmod /lib/modules/Si4709_driver.ko
 	insmod /lib/modules/vibrator.ko
 	insmod /lib/modules/bthid.ko
-	insmod /lib/modules/param.ko
-	insmod /lib/modules/ltespi.ko
-	insmod /lib/modules/onedram.ko
-	insmod /lib/modules/svnet.ko
-	insmod /lib/modules/modemctl.ko
-	insmod /lib/modules/dpram.ko
-	insmod /lib/modules/nvstorage.ko
 
 on fs
 	mount rfs /dev/block/stl10 /system noatime ro check=no
@@ -164,8 +157,10 @@ on fs
 	mount rfs /dev/block/stl3 /efs nosuid nodev check=no
 	chown radio radio /efs
 	chmod 0771 /efs
+
 	mkdir /mnt/.lfs 0755 root root
 	mount j4fs /dev/block/stl7 /mnt/.lfs
+	insmod /lib/modules/param.ko
 
 on post-fs
 # once everything is setup, no need to modify /
@@ -275,11 +270,19 @@ on post-fs
 	chmod 0770 /cache/lost+found
 	chown radio radio /dev/multipdp
 
-# pgps daemon
-	mkdir /data/rxn 0771 system system
-	chown system system /data/rxn
-	chmod 0771 /data/rxn 
-	chmod 0777 /system/etc/cellcache.db
+	insmod /lib/modules/ltespi.ko
+	insmod /lib/modules/onedram.ko
+	insmod /lib/modules/svnet.ko
+	insmod /lib/modules/modemctl.ko
+	insmod /lib/modules/dpram.ko
+	insmod /lib/modules/nvstorage.ko
+
+#pgps daemon
+    mkdir /data/rxn 0771 system system
+    chown system system /data/rxn
+    chmod 0771 /data/rxn 
+    chmod 0777 /system/etc/cellcache.db
+
 
 # create data/gps for GPS demon
 	mkdir /data/gps 771 gps system

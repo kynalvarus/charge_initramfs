@@ -25,16 +25,18 @@ on init
 	chmod 0771 /data 
 
 on early-fs
-	insmod /lib/modules/fsr.ko
-	insmod /lib/modules/fsr_stl.ko
-	insmod /lib/modules/rfs_glue.ko
-	insmod /lib/modules/rfs_fat.ko
-	insmod /lib/modules/j4fs.ko
-	insmod /lib/modules/param.ko
 
-# parameter block
-	mkdir /mnt/.lfs 0755 root root
-	mount j4fs /dev/block/stl6 /mnt/.lfs
+    # rfs drivers
+    insmod /lib/modules/fsr.ko
+    insmod /lib/modules/fsr_stl.ko
+    insmod /lib/modules/rfs_glue.ko
+    insmod /lib/modules/rfs_fat.ko
+
+    # parameter block
+    mkdir /mnt/.lfs 0755 root root
+    insmod /lib/modules/j4fs.ko
+    mount j4fs /dev/block/stl6 /mnt/.lfs
+    insmod /lib/modules/param.ko
 
 on fs
 	mount tmpfs tmpfs /tmp

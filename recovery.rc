@@ -37,7 +37,7 @@ on early-fs
 	insmod /lib/modules/j4fs.ko
 	insmod /lib/modules/param.ko
 	insmod /lib/modules/wtlfota_dpram.ko
-	insmod /lib/modules/param.ko
+
 
 on fs
 	mount tmpfs tmpfs /tmp
@@ -47,6 +47,7 @@ on fs
 
 	mkdir /mnt/.lfs 0755 root root
 	mount j4fs /dev/block/stl7 /mnt/.lfs
+	insmod /lib/modules/param.ko
 
 on post-fs
 	write /proc/sys/kernel/panic_on_oops 1
