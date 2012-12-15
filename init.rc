@@ -626,8 +626,8 @@ service animate /sbin/animate
 	oneshot
 
 # Root device automatically on boot
-service install_root /sbin/install_root
-	oneshot
+#service install_root /sbin/install_root
+#	oneshot
 
 # Samsung USB Mode : system properties are linked with sysfs
 # write /sys/class/sec/switch/UsbMenuSel 0
