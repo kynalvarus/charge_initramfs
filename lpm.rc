@@ -38,6 +38,10 @@ on fs
 	mount rfs /dev/block/stl10 /system check=no
 	mount ext4 /dev/block/stl10 /system noatime barrier=0 data=journal noauto_da_alloc
 
+	write /proc/sys/kernel/hung_task_timeout_secs 0
+	write /proc/sys/kernel/hung_task_panic 0
+	#write /sys/kernel/fast_charge/force_fast_charge 1
+
 on boot
 	ifup lo
 	hostname localhost
