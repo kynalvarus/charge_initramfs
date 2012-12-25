@@ -10,23 +10,25 @@
 
 # Check to see if we have a standard bootanimation.zip file, and if so
 # move it to sanim.zip
-if ls /system/media/bootanimation.zip || ls /data/local/bootanimation.zip
+if [ -r /system/media/bootanimation.zip -o -r /data/local/bootanimation.zip ]
 then
-	if ls /data/local/bootanimation.zip
-	then
-		mv /data/local/bootanimation.zip /system/media/sanim.zip
-	else
-		mv /system/media/bootanimation.zip /system/media/sanim.zip
-	fi
+# make /system read-write
+    mount -o remount,rw /dev/block/stl10 /system
+    if [ -r /data/local/bootanimation.zip ]
+    then
+	mv /data/local/bootanimation.zip /system/media/sanim.zip
+    else
+	mv /system/media/bootanimation.zip /system/media/sanim.zip
+    fi
 fi
 
 # make /system read-only
 mount -o remount,ro /dev/block/stl10 /system
 
 # Lets have an animation
-if ls /system/media/sanim.zip
+if [ -r /system/media/sanim.zip ]
 then
-	/system/bin/bootanimation
+	exec /system/bin/bootanimation
 else
-	/system/bin/samsungani
+	exec /system/bin/samsungani
 fi
