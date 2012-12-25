@@ -124,7 +124,7 @@ on fs
 	mount ext4 /dev/block/stl10 /system noatime barrier=0 data=journal noauto_da_alloc
 
 # SEC_INTERNAL_STORAGE
-# mount internal stroage (moviNAND or iNand)
+# mount internal storage (moviNAND or iNand)
 	mkdir /data
 	mount rfs /dev/block/mmcblk0p1 /data noatime nosuid nodev check=no
 	exec /sbin/e2fsck -p /dev/block/mmcblk0p1
@@ -644,6 +644,10 @@ on property:persist.service.usb.setting=4
 
 # Swap partition
 service add_swap /sbin/add_swap
+	oneshot
+
+# Zram setup
+service add_zram /sbin/add_zram
 	oneshot
 
 # Do we want logcat enabled or not?

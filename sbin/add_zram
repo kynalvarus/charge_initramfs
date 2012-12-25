@@ -1,0 +1,17 @@
+#!/system/bin/sh
+#
+# Add some extra memory to the device by using zram
+# If we have zram.ko and find file /data/local/usezram,
+# use the number contained in that file as a number 
+# of MB to assign to /sys/block/zram0/disksize
+#
+# (c) 2012 - Ryan Martin (kynalvarus)
+# http://twitter.com/kynalvarus
+#
+if [ -r /lib/modules/zram.ko -a -r /data/local/usezram ];
+then
+    modprobe zram || exit
+    echo $((`cat /data/local/usezram`*1024*1024)) > /sys/block/zram0/disksize
+    mkswap /dev/block/zram0 || exit
+    swapon /dev/block/zram0
+fi
