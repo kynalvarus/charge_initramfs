@@ -10,8 +10,8 @@
 #
 if [ -r /lib/modules/zram.ko -a -r /data/local/usezram ];
 then
-    modprobe zram || exit
     echo $((`cat /data/local/usezram`*1024*1024)) > /sys/block/zram0/disksize
     mkswap /dev/block/zram0 || exit
     swapon /dev/block/zram0
+    echo 10 > /proc/sys/vm/swappiness
 fi

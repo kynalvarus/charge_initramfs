@@ -276,6 +276,7 @@ on post-fs
 	insmod /lib/modules/modemctl.ko
 	insmod /lib/modules/dpram.ko
 	insmod /lib/modules/nvstorage.ko
+	insmod /lib/modules/zram.ko
 
 #pgps daemon
     mkdir /data/rxn 0771 system system
@@ -486,6 +487,8 @@ on post-fs
 # SISO-PLAYREADY-CHANGES
 
 on boot
+	start animate
+
 # basic network init
 	ifup lo
 	hostname localhost
